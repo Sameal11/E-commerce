@@ -1,9 +1,14 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 from db_connect import get_db_connection
 from flask_bcrypt import Bcrypt
 from flask_session import Session
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="../templates",
+            static_folder="../static")
+
 app.secret_key = "your_secret_key"  # Change this to a secure key
 
 bcrypt = Bcrypt(app)
@@ -13,12 +18,12 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 
-
 @app.route('/')
 def home():
     if "user_id" in session:
-        return render_template("home.html", username=session["user_name"])
-    return redirect('/auth')
+        return render_template("home.html", username=session.get("user_name"))
+    return redirect(url_for('auth'))  
+
 
 
 # Combined Login & Register Page
