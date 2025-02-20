@@ -24,6 +24,27 @@ def home():
         return render_template("home.html", username=session.get("user_name"))
     return redirect(url_for('auth'))  
 
+#whishlist
+@app.route('/wishlist')
+def wishlist():
+    return render_template('wishlist.html')
+
+#cart
+@app.route('/cart')
+def cart():
+    return render_template('cart.html')
+#contact
+@app.route('/Contact')
+def contact():
+    return render_template('contact.html')
+
+@app.context_processor
+def inject_user():
+    return dict(username=session.get("user_name"))
+
+@app.context_processor
+def inject_globals():
+    return dict(request=request)
 
 
 # Combined Login & Register Page
