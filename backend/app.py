@@ -1,6 +1,7 @@
 import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 from db_connect import get_db_connection
 from flask_bcrypt import Bcrypt
@@ -17,37 +18,33 @@ bcrypt = Bcrypt(app)
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-
+# ✅ Fixed Home Route: Allows non-logged-in users to access home.html
 @app.route('/')
 def home():
-    if "user_id" in session:
-        return render_template("home.html", username=session.get("user_name"))
-    return redirect(url_for('auth'))  
+    username = session.get("user_name", "Guest")  # Default to 'Guest' if not logged in
+    return render_template("home.html", username=username)
+@app.route('/cart')
+def cart():
+    return render_template('cart.html')  # Make sure 'cart.html' exists in templates
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        message = request.form.get('message')
+        
+        # You can save this data to a database or send an email notification
+        print(f"Received message from {name} ({email}): {message}")
+        
+        return redirect(url_for('contact'))  # Redirect after submission
 
-#whishlist
+    return render_template('contact.html')
+# wishlist page
 @app.route('/wishlist')
 def wishlist():
     return render_template('wishlist.html')
 
-#cart
-@app.route('/cart')
-def cart():
-    return render_template('cart.html')
-#contact
-@app.route('/Contact')
-def contact():
-    return render_template('contact.html')
-
-@app.context_processor
-def inject_user():
-    return dict(username=session.get("user_name"))
-
-@app.context_processor
-def inject_globals():
-    return dict(request=request)
-
-
-# Combined Login & Register Page
+# ✅ Combined Login & Register Page
 @app.route('/auth', methods=['GET', 'POST'])
 def auth():
     if request.method == 'POST':
@@ -87,9 +84,8 @@ def auth():
                     (name, mobile, email, password_hashed)
                 )
                 conn.commit()
-                flash("Registration successful! You can now login.", "success")
+                flash("Registration successful! You can now log in.", "success")
             except Exception as e:
-                # Log error (you can print e or log it)
                 flash("Registration failed: " + str(e), "danger")
             finally:
                 conn.close()
@@ -98,12 +94,14 @@ def auth():
 
     return render_template('auth.html')
 
-# Logout
+
+# ✅ Logout Route
 @app.route('/logout')
 def logout():
     session.clear()
     flash("You have been logged out.", "info")
     return redirect(url_for('auth'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
