@@ -1,0 +1,34 @@
+.top-products-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 250px;
+    width: 350px;
+    position: relative;
+}
+
+.top-product-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.product-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.slide-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.slide-out {
+    opacity: 0;
+    transform: translateX(-100%);
+}

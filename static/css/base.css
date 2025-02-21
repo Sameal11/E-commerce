@@ -9,6 +9,12 @@
     text-decoration: none;
     margin-left: 15px;
 }
+.navbar-nav .nav-link.active {
+    color: #ffcc00 !important;  /* Change text color to yellow */
+    font-weight: bold;          /* Make it bold */
+   /* border-bottom: 2px solid #ffcc00;*/ /* Add bottom border */
+}
+
 .category-slider {
     position: fixed;
     top: 0;
@@ -19,6 +25,10 @@
     border-right: 1px solid #ddd;
     padding: 20px;
     transition: left 0.3s ease-in-out;
+}
+.line {
+    height: 2px;
+
 }
 .category-slider ul {
     list-style: none;
@@ -35,3 +45,22 @@
     margin: 0 20px;
     width: auto;
 }
+/*profile*/
+.profile-img {
+    width: 40px;  /* Adjust size */
+    height: 40px;
+    left: 1px;
+    border-radius: 50%; /* Make it circular */
+    margin-right: 10px;
+    position: absolute;
+    top: 7px;
+  }
+  .auth-links {
+    position: absolute;
+    right: 20px; /* Push it to the right */
+    top: 5px; /* Adjust as needed */
+    display: flex;
+    gap: 10px;
+  }
+
+  
