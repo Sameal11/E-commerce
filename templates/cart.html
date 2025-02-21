@@ -9,8 +9,40 @@
     {% block title %}Home - E-Commerce{% endblock %}
     
     {% block content %}
-        <h1>Welcome to Our E-Commerce Platform</h1>
-        <p>Browse and shop amazing products!</p>
+        <!-- Shopping Cart -->
+    <div class="container mt-5">
+        <h1 class="text-center">Shopping Cart</h1>
+        <p class="text-center">Review your selected items before placing an order.</p>
+  
+        <div class="row">
+            <div class="col-lg-8">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-items">
+                        <!-- Dynamic cart items will be added here -->
+                    </tbody>
+                </table>
+            </div>
+  
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Cart Summary</h3>
+                        <p><strong>Subtotal:</strong> $<span id="subtotal">0.00</span></p>
+                        <button class="btn btn-success w-100" id="checkoutBtn">Place Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endblock %}
 
 </head>

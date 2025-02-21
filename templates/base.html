@@ -31,9 +31,9 @@
           </li>
           <!--wishlist -->
           <li class="nav-item">
-            <a class="nav-link {% if request.endpoint == 'wishlist' %}active{% endif %} " href="{{ url_for('wishlist') }}">
-                Wishlist ❤ <span class="basdge bg-danger" id="cart-count">0</span></a>
-          </li>
+            <a class="nav-link {% if request.endpoint == 'wishlist' %}active{% endif %}" href="{{ url_for('wishlist') }}">
+              wishlist 🛒 <span class="badge bg-danger" id="wishlist-count">0</span>
+            </a>
           <!-- New Cart Button -->
           <li class="nav-item">
             <a class="nav-link {% if request.endpoint == 'cart' %}active{% endif %}" href="{{ url_for('cart') }}">
