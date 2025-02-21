@@ -1,0 +1,31 @@
+    /* Body with background image */
+    body {
+        margin: 0;
+      height: 2000px; /* To allow scrolling */
+      
+    background-image: url('/static/images/contact.jpg'); /* Replace with your image URL */
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      padding: 0;
+      color: rgb(5, 5, 5);
+    }
+    /* Overlay to darken the background for content readability */
+    .overlay {
+      min-height: 100vh;
+      padding-top: 80px; /* To account for the fixed navbar */
+    }
+    /* Main content container */
+    .contact-container {
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    /* Adjust spacing for the contact form and details */
+    .contact-container h1,
+    .contact-container p {
+      margin-bottom: 20px;
+    }
+ 
