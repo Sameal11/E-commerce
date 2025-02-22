@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<<<<<<< HEAD
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wishlist</title>
@@ -12,45 +11,33 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/wishlist.css') }}">
 </head>
 <body>
-    <!-- Wishlist Section -->
-    <div class="container mt-5">
-      <h1 class="text-center">Your Wishlist ❤️</h1>
-      <p class="text-center">Save items you love for later!</p>
-
-      <div class="row">
-          <div class="col-lg-8">
-              <table class="table table-bordered">
-                  <thead class="table-dark">
-                      <tr>
-                          <th>Product</th>
-                          <th>Price</th>
-                          <th>Move to Cart</th>
-                          <th>Remove</th>
-                      </tr>
-                  </thead>
-                  <tbody id="wishlist-items">
-                      <!-- Wishlist items will be dynamically added here -->
-                  </tbody>
-              </table>
-          </div>
-      </div>
-    </div>
-</body>
-</html>
-=======
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wishlist</title>
     {% extends "base.html" %}
     {% block title %}Home - E-Commerce{% endblock %}
     {% block content %}
-        <h1>Welcome to  wishlist</h1>
-        <p>Browse and shop amazing products!</p>
+        <!-- Wishlist Section -->
+     <div class="container mt-5">
+        <h1 class="text-center">Your Wishlist ❤️</h1>
+        <p class="text-center">Save items you love for later!</p>
+  
+        <div class="row">
+            <div class="col-lg-8">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Move to Cart</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody id="wishlist-items">
+                        <!-- Wishlist items will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+      
     {% endblock %}
-
-</head>
-<body>
-
 </body>
 </html>
->>>>>>> 71e3b7508f434569ff3b47cc1d9cd44be8a05aa5

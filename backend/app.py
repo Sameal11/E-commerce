@@ -18,14 +18,16 @@ bcrypt = Bcrypt(app)
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# ✅ Fixed Home Route: Allows non-logged-in users to access home.html
-@app.route('/')
-def home():
-    username = session.get("user_name", "Guest")  # Default to 'Guest' if not logged in
-    return render_template("home.html", username=username)
+#cart page 
 @app.route('/cart')
 def cart():
     return render_template('cart.html')  # Make sure 'cart.html' exists in templates
+
+# wishlist page
+@app.route('/wishlist')
+def wishlist():
+    return render_template('wishlist.html')
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
@@ -39,12 +41,21 @@ def contact():
         return redirect(url_for('contact'))  # Redirect after submission
 
     return render_template('contact.html')
-# wishlist page
-@app.route('/wishlist')
-def wishlist():
-    return render_template('wishlist.html')
+#gor skip or guest 
+@app.route('/')
+def home():
+    username = session.get("user_name", "Guest")  # Default to 'Guest' if not logged in
+    return render_template("home.html", username=username)
 
-# ✅ Combined Login & Register Page
+@app.context_processor
+def inject_user():
+    return dict(username=session.get("user_name"))
+
+@app.context_processor
+def inject_globals():
+    return dict(request=request)
+
+# Combined Login & Register Page
 @app.route('/auth', methods=['GET', 'POST'])
 def auth():
     if request.method == 'POST':

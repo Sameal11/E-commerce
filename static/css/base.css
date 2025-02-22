@@ -43,7 +43,7 @@
 .search-bar {
     flex-grow: 1;
     margin: 0 20px;
-    width: auto;
+    width: 60px;
 }
 /*profile*/
 .profile-img {
@@ -51,7 +51,8 @@
     height: 40px;
     left: 1px;
     border-radius: 50%; /* Make it circular */
-    margin-right: 10px;
+    margin-right: 0px;
+    margin-left: auto;
     position: absolute;
     top: 7px;
   }
@@ -63,4 +64,27 @@
     gap: 10px;
   }
 
-  
+/* Ensure main content is scrollable */
+#main-content {
+    max-height: auto; /* Adjust based on layout */
+    overflow-y: scroll !important;
+    scrollbar-width: thin; /* Firefox */
+}
+
+/* For Webkit Browsers (Chrome, Safari) */
+#main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+#main-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#main-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+#main-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

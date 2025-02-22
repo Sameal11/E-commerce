@@ -13,87 +13,94 @@
 </head>
 <body>
     <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <button class="btn btn-light me-2" id="categoryBtn">Categories</button>
-      <a class="navbar-brand" href="{{ url_for('home') }}">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" height="40">
-      </a>
-      <!--search bar -->
-      <input type="text" class="form-control search-bar" placeholder="Search products...">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" href="{{ url_for('home') }}">Home</a>
-          </li>
-          <!--wishlist -->
-          <li class="nav-item">
-            <a class="nav-link {% if request.endpoint == 'wishlist' %}active{% endif %}" href="{{ url_for('wishlist') }}">
-              wishlist 🛒 <span class="badge bg-danger" id="wishlist-count">0</span>
-            </a>
-          <!-- New Cart Button -->
-          <li class="nav-item">
-            <a class="nav-link {% if request.endpoint == 'cart' %}active{% endif %}" href="{{ url_for('cart') }}">
-              Cart 🛒 <span class="badge bg-danger" id="cart-count">0</span>
-            </a>
-          </li>
-          <!-- contact Button -->
-          <li class="nav-item">
-            <a class="nav-link {% if request.endpoint == 'contact' %}active{% endif %}" href="{{ url_for('contact') }}">
-              Contact <span class="badge bg-danger" ></span>
-          </li>
-        </ul>
-        <!-- profile details -->
-        <div class="auth-links d-flex align-items-center">
-          {% if username %}
-            <ul class="navbar-nav ms-auto d-flex align-items-center">
-              <li class="nav-item">
-                <img src="{{ url_for('static', filename='images/profilep.jpg') }}" alt="Profile Picture" class="profile-img">
-              </li>
-              <li class="nav-item">
-                <span class="nav-link text-white">Hello,{{ username }}!</span>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-white" href="{{ url_for('logout') }}">Logout</a>
-              </li>
-            </ul>
-          {% else %}
-            <a class="nav-link text-white ms-auto" href="{{ url_for('auth') }}">Login</a>
-          {% endif %}
-        </div>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <button class="btn btn-light me-2" id="categoryBtn">Categories</button>
+        <a class="navbar-brand" href="{{ url_for('home') }}">
+         <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" height="40">
+       </a>
+        <!--search bar -->
+       <input type="text" class="form-control search-bar" placeholder="Search products...">
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+           <li class="nav-item">
+              <a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" href="{{ url_for('home') }}">Home</a>
+           </li>
+           <!--wishlist -->
+           <li class="nav-item">
+              <a class="nav-link {% if request.endpoint == 'wishlist' %}active{% endif %}" href="{{ url_for('wishlist') }}">
+                wishlist 🛒 <span class="badge bg-danger" id="wishlist-count">0</span>
+             </a>
+            </li>
+            <!-- New Cart Button -->
+            <li class="nav-item">
+             <a class="nav-link {% if request.endpoint == 'cart' %}active{% endif %}" href="{{ url_for('cart') }}">
+                Cart 🛒 <span class="badge bg-danger" id="cart-count">0</span>
+             </a>
+            </li>
+            <!-- contact Button -->
+            <li class="nav-item">
+              <a class="nav-link {% if request.endpoint == 'contact' %}active{% endif %}" href="{{ url_for('contact') }}">
+                Contact <span class="badge bg-danger" ></span>
+              </a>
+            </li>
+          </ul>
+         <!-- profile details -->
+         <div class="auth-links d-flex align-items-center">
+            {% if username %}
+             <ul class="navbar-nav ms-auto d-flex align-items-center">
+               <li class="nav-item">
+                 <img src="{{ url_for('static', filename='images/profilep.jpg') }}" alt="Profile Picture" class="profile-img">
+                </li>
+               <li class="nav-item">
+                 <span class="nav-link text-white">Hello,{{ username }}!</span>
+               </li>
+                <li class="nav-item">
+                 <a class="nav-link text-white" href="{{ url_for('logout') }}">Logout</a>
+               </li>
+              </ul>
+            {% else %}
+             <a class="nav-link text-white ms-auto" href="{{ url_for('auth') }}">Login</a>
+            {% endif %}
+          </div>
         
            
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- Category Slider -->
-  <div class="category-slider" id="categorySlider">
-    <ul>
-      <h2>Category</h2>
-      <hr class="line">
-      <li><a href="#">Electronics</a></li>
-      <li><a href="#">Fashion</a></li>
-      <li><a href="#">Home & Kitchen</a></li>
-      <li><a href="#">Sports & Fitness</a></li>
-      <li><a href="#">Books</a></li>
-      <li><a href="#">Toys & Games</a></li>
-      <li><a href="#">Beauty & Health</a></li>
-      <li><a href="#">Automobiles</a></li>
-      <li><a href="#">Groceries</a></li>
-      <li><a href="#">Furniture</a></li>
-    </ul>
-  </div>
+    <!-- Category Slider -->
+    <div class="category-slider" id="categorySlider">
+        <ul>
+        <h2>Category</h2>
+        <hr class="line">
+        <li><a href="#">Electronics</a></li>
+        <li><a href="#">Fashion</a></li>
+        <li><a href="#">Home & Kitchen</a></li>
+        <li><a href="#">Sports & Fitness</a></li>
+        <li><a href="#">Books</a></li>
+        <li><a href="#">Toys & Games</a></li>
+        <li><a href="#">Beauty & Health</a></li>
+        <li><a href="#">Automobiles</a></li>
+        <li><a href="#">Groceries</a></li>
+        <li><a href="#">Furniture</a></li>
+      </ul>
+   </div>
 
-
+  </header>
 
   <!-- Page Content -->
-  <div class="container mt-4">
+  <main id="main-content">
+    
     {% block content %}{% endblock %}
-  </div>
 
+  </main>
+  <footer>
+
+  </footer>
 </body>
 </html>
