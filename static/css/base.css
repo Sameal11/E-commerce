@@ -5,7 +5,7 @@
     height: 10px;
 }
 .auth-links a, .auth-links span {
-    color: white;
+    color: rgba(250, 251, 251, 0.967);
     text-decoration: none;
     margin-left: 15px;
 }
@@ -22,7 +22,11 @@
     width: 250px;
     height: 100vh;
     background: rgb(0, 0, 0, 0.9);
+<<<<<<< HEAD
     color:white;
+=======
+    color:white;/**/
+>>>>>>> 3f9f5dee3542b0bcd0a0f2572c85093c9ce77d0a
     box-shadow: 2px 0 10px rgb(0, 0, 0, 0.5);
     z-index: 1100;
     overflow-y: auto;
@@ -53,12 +57,10 @@
 .profile-img {
     width: 40px;  /* Adjust size */
     height: 40px;
-    left: 1px;
     border-radius: 50%; /* Make it circular */
-    margin-right: 0px;
-    margin-left: auto;
-    position: absolute;
-    top: 7px;
+    margin-right: 1px;
+    position: left;
+    top: auto;
   }
   .auth-links {
     position: relative;
@@ -72,7 +74,8 @@
 #main-content {
     max-height: auto; /* Adjust based on layout */
     overflow-y: scroll !important;
-    scrollbar-width: thin; /* Firefox */
+    scrollbar-width: 2px; /* Firefox */
+
 }
 
 /* For Webkit Browsers (Chrome, Safari) */
