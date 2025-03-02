@@ -1,69 +1,52 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    // Function to update the cart quantity
+    const updateCartQuantity = (itemName) => {
+        const quantityInput = document.querySelector(`input[name="quantity_${itemName}"]`);
+        const newQuantity = quantityInput.value;
 
-    function updateCart() {
-        let cartTable = document.getElementById("cart-items");
-        let subtotal = 0;
-        cartTable.innerHTML = "";
-
-        if (cart.length === 0) {
-            cartTable.innerHTML = "<tr><td colspan='5' class='text-center'>Your cart is empty</td></tr>";
-        } else {
-            cart.forEach((item, index) => {
-                let total = item.price * item.quantity;
-                subtotal += total;
-
-                cartTable.innerHTML += `
-                    <tr>
-                        <td>${item.name}</td>
-                        <td>$${item.price.toFixed(2)}</td>
-                        <td>
-                            <input type="number" class="form-control" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
-                        </td>
-                        <td>$${total.toFixed(2)}</td>
-                        <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">X</button></td>
-                    </tr>
-                `;
-            });
-        }
-
-        document.getElementById("subtotal").innerText = subtotal.toFixed(2);
-        localStorage.setItem("cart", JSON.stringify(cart));
-    }
-
-    window.updateQuantity = function (index, quantity) {
-        if (quantity < 1) return;
-        cart[index].quantity = parseInt(quantity);
-        updateCart();
+        fetch(`/update_cart/${itemName}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({ quantity: newQuantity }),
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.reload(); // Reload the cart page to reflect changes
+            } else {
+                alert("Failed to update quantity.");
+            }
+        });
     };
 
-    window.removeFromCart = function (index) {
-        cart.splice(index, 1);
-        updateCart();
+    // Function to remove an item from the cart
+    const removeFromCart = (itemName) => {
+        fetch(`/remove_from_cart/${itemName}`)
+        .then(response => {
+            if (response.ok) {
+                window.location.reload(); // Reload the cart page to reflect changes
+            } else {
+                alert("Failed to remove item from cart.");
+            }
+        });
     };
 
-    document.getElementById("checkoutBtn")?.addEventListener("click", function () {
-        if (cart.length === 0) {
-            alert("Your cart is empty!");
-        } else {
-            alert("Proceeding to checkout...");
-            localStorage.removeItem("cart");
-            window.location.href = "checkout.html"; // Redirect to checkout page
-        }
+    // Attach event listeners to update buttons
+    const updateButtons = document.querySelectorAll(".update-cart");
+    updateButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const itemName = this.dataset.itemName;
+            updateCartQuantity(itemName);
+        });
     });
 
-    updateCart();
-
-    // Scroll to Top functionality
-    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-
-    if (scrollToTopBtn) {
-        window.addEventListener("scroll", function () {
-            scrollToTopBtn.style.display = window.scrollY > 300 ? "block" : "none";
+    // Attach event listeners to remove buttons
+    const removeButtons = document.querySelectorAll(".remove-from-cart");
+    removeButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            const itemName = this.dataset.itemName;
+            removeFromCart(itemName);
         });
-
-        scrollToTopBtn.addEventListener("click", function () {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-    }
+    });
 });

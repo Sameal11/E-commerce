@@ -30,9 +30,24 @@
                             <th>Remove</th>
                         </tr>
                     </thead>
-                    <tbody id="wishlist-items">
-                        <!-- Wishlist items will be dynamically added here -->
+                    <tbody>
+                        {% for item in wishlist %}
+                        <tr>
+                            <td>
+                                <img src="{{ url_for('static', filename=item.image) }}" width="50">
+                                {{ item.name }}
+                            </td>
+                            <td>${{ item.price }}</td>
+                            <td>
+                                <a href="{{ url_for('move_to_cart', product_id=loop.index0) }}" class="btn btn-success btn-sm">Move to Cart 🛒</a>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('remove_from_wishlist', product_id=loop.index0) }}" class="btn btn-danger btn-sm">Remove ❌</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
+                    
                 </table>
             </div>
         </div>

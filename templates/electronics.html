@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Electronics - E-Commerce{% endblock %}
+
+{% block content %}
+
+<!-- Overlay container -->
+<div class="overlay">
+    <script src="{{ url_for('static', filename='js/electronics.js') }}" defer></script> <!-- Corrected JavaScript file name -->
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Electronics</h1>
+        <p class="text-center mb-5">Find the latest and greatest in tech products.</p>
+        
+        <!-- Overlay Background -->
+        <div class="overlay-bg" id="overlay"></div>
+
+        <!-- Product Section -->
+        <div class="container product-section">
+            <h2 class="text-center">Featured Products</h2>
+
+            <div class="row">
+                <!-- Product 1 -->
+                <div class="col-md-4">
+                    <div class="card product-card">
+                        <img src="{{ url_for('static', filename='images/product1.jpg') }}" class="card-img-top" alt="Smartphone">
+                        <div class="card-body">
+                            <h5 class="card-title">Smartphone</h5>
+                            <p class="card-text">$499.99</p>
+                            <!-- Add to Wishlist -->
+                            <form action="{{ url_for('add_to_wishlist') }}" method="POST" class="wishlist-form" style="display:inline;">
+                                <input type="hidden" name="name" value="Smartphone">
+                                <input type="hidden" name="price" value="499.99">
+                                <input type="hidden" name="image" value="images/product1.jpg">
+                                <button type="submit" class="btn btn-secondary">Add to Wishlist ❤️</button>
+                            </form>
+                            <!-- Add to Cart -->
+                            <form action="{{ url_for('add_to_cart') }}" method="POST" class="cart-form" style="display:inline;">
+                                <input type="hidden" name="name" value="Smartphone">
+                                <input type="hidden" name="price" value="499.99">
+                                <input type="hidden" name="image" value="images/product1.jpg">
+                                <button type="submit" class="btn btn-primary">Add to Cart 🛒</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="col-md-4">
+                    <div class="card product-card">
+                        <img src="{{ url_for('static', filename='images/product2.jpg') }}" class="card-img-top" alt="Laptop">
+                        <div class="card-body">
+                            <h5 class="card-title">Laptop</h5>
+                            <p class="card-text">$999.99</p>
+                            <!-- Add to Wishlist -->
+                            <form action="{{ url_for('add_to_wishlist') }}" method="POST" class="wishlist-form" style="display:inline;">
+                                <input type="hidden" name="name" value="Laptop">
+                                <input type="hidden" name="price" value="999.99">
+                                <input type="hidden" name="image" value="images/product2.jpg">
+                                <button type="submit" class="btn btn-secondary">Add to Wishlist ❤️</button>
+                            </form>
+                            <!-- Add to Cart -->
+                            <form action="{{ url_for('add_to_cart') }}" method="POST" class="cart-form" style="display:inline;">
+                                <input type="hidden" name="name" value="Laptop">
+                                <input type="hidden" name="price" value="999.99">
+                                <input type="hidden" name="image" value="images/product2.jpg">
+                                <button type="submit" class="btn btn-primary">Add to Cart 🛒</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="col-md-4">
+                    <div class="card product-card">
+                        <img src="{{ url_for('static', filename='images/product3.jpg') }}" class="card-img-top" alt="Headphones">
+                        <div class="card-body">
+                            <h5 class="card-title">Headphones</h5>
+                            <p class="card-text">$199.99</p>
+                            <!-- Add to Wishlist -->
+                            <form action="{{ url_for('add_to_wishlist') }}" method="POST" class="wishlist-form" style="display:inline;">
+                                <input type="hidden" name="name" value="Headphones">
+                                <input type="hidden" name="price" value="199.99">
+                                <input type="hidden" name="image" value="images/product3.jpg">
+                                <button type="submit" class="btn btn-secondary">Add to Wishlist ❤️</button>
+                            </form>
+                            <!-- Add to Cart -->
+                            <form action="{{ url_for('add_to_cart') }}" method="POST" class="cart-form" style="display:inline;">
+                                <input type="hidden" name="name" value="Headphones">
+                                <input type="hidden" name="price" value="199.99">
+                                <input type="hidden" name="image" value="images/product3.jpg">
+                                <button type="submit" class="btn btn-primary">Add to Cart 🛒</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

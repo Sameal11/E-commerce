@@ -1,0 +1,38 @@
+
+
+/* Banner */
+.banner {
+    background: url("../images/banner.jpg") center/cover no-repeat;
+    height: 250px;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.banner h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+ 
+/* Product Section */
+.product-section {
+    margin-top: 40px;
+}
+
+.product-card {
+    margin: 20px 0;
+    border: none;
+}
+
+.product-card .card {
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}

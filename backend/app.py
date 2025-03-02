@@ -18,16 +18,125 @@ bcrypt = Bcrypt(app)
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-#cart page 
-@app.route('/cart')
+
+products = {
+    "1": {"name": "Elegant Dress", "price": 79.99, "image": "images/dress.jpg"},
+    "2": {"name": "Casual Shirt", "price": 39.99, "image": "images/shirt.jpg"},
+    "3": {"name": "Stylish Sneakers", "price": 89.99, "image": "images/sneakers.jpg"},
+}
+
+#cart pages
+@app.route("/cart")
 def cart():
-    return render_template('cart.html')  # Make sure 'cart.html' exists in templates
+    cart_items = session.get("cart", [])
+    subtotal = sum(float(item["price"]) * item["quantity"] for item in cart_items)  # Ensure price is float
+    return render_template("cart.html", cart_items=cart_items, subtotal=subtotal)
+
+@app.route("/add_to_cart", methods=["POST"])
+def add_to_cart():
+    name = request.form["name"]
+    price = float(request.form["price"])
+    image = request.form["image"]
+
+    if "cart" not in session:
+        session["cart"] = []
+
+    cart = session["cart"]
+
+    # Check if the product is already in the cart
+    for item in cart:
+        if item["name"] == name:
+            item["quantity"] += 1  # Increase quantity
+            session.modified = True
+            return redirect(url_for("cart"))
+
+    # If not found, add a new entry
+    cart.append({"name": name, "price": price, "image": image, "quantity": 1})
+    session.modified = True
+    return redirect(url_for("cart"))
+
+@app.route("/update_cart/<item_name>", methods=["POST"])
+def update_cart(item_name):
+    new_quantity = int(request.form["quantity"])
+
+    if "cart" in session:
+        for item in session["cart"]:
+            if item["name"] == item_name:
+                item["quantity"] = new_quantity  # Update quantity
+                break
+        session.modified = True
+
+    return redirect(url_for("cart"))
+@app.route('/move_to_cart/<int:product_id>')
+def move_to_cart(product_id):
+    print(f"Moving item with index {product_id} to cart.")
+    if "wishlist" in session:
+        wishlist = session["wishlist"]
+        if 0 <= product_id < len(wishlist):
+            item = wishlist.pop(product_id)  # Remove the item from the wishlist
+            print(f"Item moved: {item}")
+            # Add the item to the cart
+            if "cart" not in session:
+                session["cart"] = []
+            session["cart"].append({"name": item["name"], "price": item["price"], "image": item["image"], "quantity": 1})
+            session.modified = True
+    return redirect(url_for("wishlist"))
+
+@app.route("/remove_from_cart/<item_name>")
+def remove_from_cart(item_name):
+    if "cart" in session:
+        session["cart"] = [item for item in session["cart"] if item["name"] != item_name]
+        session.modified = True
+
+    return redirect(url_for("cart"))
+
+@app.route("/checkout")
+def checkout():
+    cart_items = session.get("cart", [])
+    subtotal = sum(item["price"] * item["quantity"] for item in cart_items)
+    return render_template("checkout.html", cart_items=cart_items, subtotal=subtotal)
+
+
 
 # wishlist page
 @app.route('/wishlist')
 def wishlist():
-    return render_template('wishlist.html')
+    wishlist_items = session.get("wishlist", [])  # Retrieve wishlist items from session
+    return render_template('wishlist.html', wishlist=wishlist_items)
 
+@app.route('/add_to_wishlist', methods=['POST'])
+def add_to_wishlist():
+    product = {
+        "name": request.form.get("name"),
+        "price": request.form.get("price"),
+        "image": request.form.get("image")
+    }
+
+    wishlist = session.get("wishlist", [])
+    wishlist.append(product)
+    session["wishlist"] = wishlist  # Save to session
+    return redirect(url_for('wishlist'))
+
+
+@app.route('/remove_from_wishlist/<int:product_id>')
+def remove_from_wishlist(product_id):
+    wishlist = session.get("wishlist", [])
+    if 0 <= product_id < len(wishlist):
+        wishlist.pop(product_id)
+    session["wishlist"] = wishlist
+    return redirect(url_for('wishlist'))
+
+
+
+# fashion page
+@app.route('/fashion')
+def fashion():
+    return render_template('fashion.html', products=products)  # Pass products
+
+# electronic page
+@app.route('/electronics')
+def electronics(): 
+    return render_template('electronics.html')
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':

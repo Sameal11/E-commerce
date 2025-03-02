@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Fashion - E-Commerce{% endblock %}
+
+{% block content %}
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/fashion.css') }}">
+  
+  <script src="{{ url_for('static', filename='js/electronics.js') }}" defer></script> <!-- Corrected JavaScript file name -->
+  
+  <!-- Background Video -->
+  <video autoplay muted loop id="background-video" class="background-video">
+    <source src="{{ url_for('static', filename='images/fashion.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Overlay Background -->
+  <div class="overlay-bg" id="overlay"></div>
+
+  <!-- Overlay container -->
+  <div class="overlay">
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Latest Fashion Trends</h1>
+      <p class="text-center mb-5">Discover the best styles in clothing and accessories.</p>
+
+      <!-- Product Cards -->
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <img src="{{ url_for('static', filename='images/dress.jpg') }}" class="card-img-top" alt="Stylish Dress">
+            <div class="card-body">
+              <h5 class="card-title">Elegant Dress</h5>
+              <p class="card-text">$79.99</p>
+              <!-- Add to Wishlist -->
+              <form action="{{ url_for('add_to_wishlist') }}" method="POST" style="display:inline;">
+                <input type="hidden" name="name" value="Elegant Dress">
+                <input type="hidden" name="price" value="79.99">
+                <input type="hidden" name="image" value="images/dress.jpg">
+                <button type="submit" class="btn btn-secondary">Add to Wishlist ❤️</button>
+              </form>
+
+              <!-- Add to Cart -->
+              <form action="{{ url_for('add_to_cart') }}" method="POST" style="display:inline;">
+                <input type="hidden" name="name" value="Elegant Dress">
+                <input type="hidden" name="price" value="79.99">
+                <input type="hidden" name="image" value="images/dress.jpg">
+                <button type="submit" class="btn btn-primary">Add to Cart 🛒</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card">
+            <img src="{{ url_for('static', filename='images/shirt.jpg') }}" class="card-img-top" alt="Casual Shirt">
+            <div class="card-body">
+              <h5 class="card-title">Casual Shirt</h5>
+              <p class="card-text">$39.99</p>
+              <!-- Add to Wishlist -->
+              <form action="{{ url_for('add_to_wishlist') }}" method="POST" style="display:inline;">
+                <input type="hidden" name="name" value="Casual Shirt">
+                <input type="hidden" name="price" value="39.99">
+                <input type="hidden" name="image" value="images/shirt.jpg">
+                <button type="submit" class="btn btn-secondary">Add to Wishlist ❤️</button>
+              </form>
+
+              <!-- Add to Cart -->
+              <form action="{{ url_for('add_to_cart') }}" method="POST" style="display:inline;">
+                <input type="hidden" name="name" value="Casual Shirt">
+                <input type="hidden" name="price" value="39.99">
+                <input type="hidden" name="image" value="images/shirt.jpg">
+                <button type="submit" class="btn btn-primary">Add to Cart 🛒</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card">
+            <img src="{{ url_for('static', filename='images/sneakers.jpg') }}" class="card-img-top" alt="Trendy Sneakers">
+            <div class="card-body">
+              <h5 class="card-title">Stylish Sneakers</h5>
+              <p class="card-text">$89.99</p>
+              <!-- Add to Wishlist -->
+              <form action="{{ url_for('add_to_wishlist') }}" method="POST" style="display:inline;">
+                <input type="hidden" name="name" value="Stylish Sneakers">
+                <input type="hidden" name="price" value="89.99">
+                <input type="hidden" name="image" value="images/sneakers.jpg">
+                <button type="submit" class="btn btn-secondary">Add to Wishlist ❤️</button>
+              </form>
+
+              <!-- Add to Cart -->
+              <form action="{{ url_for('add_to_cart') }}" method="POST" style="display:inline;">
+                <input type="hidden" name="name" value="Stylish Sneakers">
+                <input type="hidden" name="price" value="89.99">
+                <input type="hidden" name="image" value="images/sneakers.jpg">
+                <button type="submit" class="btn btn-primary">Add to Cart 🛒</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
