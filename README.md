@@ -1,137 +1,77 @@
-E-Commerce DBMS Project - Login & Signup System
 
-   Project Overview
+# E-Commerce Website
 
- This project is a simple authentication system for an E-Commerce DBMS using MySQL as the database. It includes a login and signup system where users can register and log in securely.
+## Overview
+This is an E-Commerce web application that allows users to browse products, add them to the cart, and make purchases. It includes features like product listing, shopping cart, wishlist, and user authentication.
 
-Features
+## Features
+- **Product Listing**: Displays products fetched from a MySQL database.
+- **Product Details**: Shows an individual product with an image, description, and price.
+- **Shopping Cart**: Users can add/remove items and update quantities.
+- **Wishlist**: Users can save products for future purchases.
+- **Dynamic Home Page**: Random featured products are displayed and refreshed every 2 seconds.
+- **Database-Driven Content**: Products, images, and details are dynamically fetched from MySQL.
 
-User Registration (Signup)
+## Technologies Used
+- **Frontend**: HTML, CSS (Bootstrap), JavaScript (AJAX, jQuery)
+- **Backend**: Python (Flask)
+- **Database**: MySQL
 
-User Authentication (Login)
-
-Secure Password Hashing (bcrypt)
-
-REST API using Node.js & Express.js
-
-MySQL Database Integration
-
-Tech Stack
-
-Backend: Node.js, Express.js
-
-Database: MySQL
-
-Frontend: HTML, CSS, JavaScript
-
-Security: bcrypt for password hashing
-
-Installation & Setup
-
-Prerequisites
-
+## Installation & Setup
+### Prerequisites
 Ensure you have the following installed:
+- Python 3.x
+- MySQL Server
+- Flask and necessary dependencies
 
-Node.js
+### Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/ecommerce-project.git
+   cd ecommerce-project
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Configure database:
+   - Create a MySQL database
+   - Import the provided `database.sql` file
+   - Update database credentials in `config.py`
+4. Run the Flask app:
+   ```bash
+   flask run
+   ```  
+   or
+   ```bash
+   Python -m Backend.app
+   ```
+   Then 
+   ```bash
+   Python Backend/app.py
+   ```
+5. Open your browser and go to:
+   ```
+   http://127.0.0.1:5000
+   ```
 
-MySQL
+## API Routes
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | Home Page |
+| `/electronics` | GET | Electronics category page |
+| `/product/<int:product_id>` | GET | Product details page |
+| `/add_to_cart` | POST | Add product to cart |
+| `/add_to_wishlist` | POST | Add product to wishlist |
+| `/cart` | GET | View shopping cart |
 
-A REST Client (Postman or cURL) to test API endpoints
+## Issues & Debugging
+- If images are not loading, ensure they are stored correctly in the `/static/images/` folder and paths are correct.
+- If database queries fail, verify database connection settings and schema.
+- Use `flask run --reload` to enable auto-reloading for debugging.
 
-Steps to Setup
-
-Clone the Repository:
-
-git clone https://github.com/yourusername/e-commerce-login-signup.git
-cd e-commerce-login-signup
-
-Install Dependencies:
-
-npm install
-
-Setup MySQL Database:
-
-Create a database named ecommerce_db.
-
-Run the following SQL query to create the users table:
-
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL
-);
-
-Configure Database Connection:
-
-Open server.js and update the database credentials:
-
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "yourpassword",
-    database: "ecommerce_db"
-});
-
-Run the Server:
-
-node server.js
-
-Open Frontend (index.html) in Browser
-
-The frontend consists of a simple form to register and login users.
-
-API Endpoints
-
-1. Signup (User Registration)
-
-Endpoint: POST /signup
-
-Request Body:
-
-{
-    "name": "John Doe",
-    "email": "john@example.com",
-    "password": "password123"
-}
-
-Response:
-
-{
-    "message": "User registered successfully"
-}
-
-2. Login (User Authentication)
-
-Endpoint: POST /login
-
-Request Body:
-
-{
-    "email": "john@example.com",
-    "password": "password123"
-}
-
-Response:
-
-{
-    "message": "Login successful",
-    "token": "your_jwt_token"
-}
-
-Future Enhancements
-
-Implement JWT-based authentication
-
-Add role-based access control (Admin, Customer, Vendor)
-
-Improve UI with a modern frontend framework (React/Vue)
-
-License
-
+## License
 This project is licensed under the MIT License.
 
-Author
 
-[Sameal11] - [github.com/sameal11]
 
