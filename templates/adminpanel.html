@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <script defer src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('admin') }}">Admin Panel</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+                <!-- Profile Details -->
+                <div class="auth-links d-flex align-items-center">
+                    {% if username %}
+                        <ul class="navbar-nav d-flex align-items-center">
+                            <li class="nav-item">
+                                <img src="{{ url_for('static', filename='images/profilep.jpg') }}" alt="Profile Picture" class="profile-img rounded-circle" width="40">
+                            </li>
+                            <li class="nav-item">
+                                <span class="nav-link text-white">Hello, {{ username }}!</span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white btn btn-danger btn-sm" href="{{ url_for('logout') }}">Logout</a>
+                            </li>
+                        </ul>
+                    {% else %}
+                        <a class="nav-link text-white ms-auto" href="{{ url_for('auth') }}">Login</a>
+                    {% endif %}
+                </div>
+
+        </div>
+    </nav>
+
+    <!-- Admin Panel -->
+    <div class="container mt-4">
+        <h2>Welcome to the Admin Panel</h2>
+
+        <!-- Search & Modify -->
+        <div class="form-box active" id="search-form">
+            <form action="{{ url_for('admin') }}" method="post">
+                <h2>Search & Modify Product</h2>
+                <input type="hidden" name="action" value="search">
+                <input type="text" name="search_query" placeholder="Enter product name..." required>
+                <button type="submit">Search</button>
+                <p><a href="#" onclick="showForm('add-form')">Add New Product</a></p>
+                <p><a href="#" onclick="showForm('remove-form')">Remove Product</a></p>
+            </form>
+
+            {% if products %}
+                <h3>Results:</h3>
+                <ul>
+                    {% for product in products %}
+                        <li>
+                            <div class="product-item">
+                                {% if product.image_url %}
+                                    <img src="{{ product.image_url }}" alt="{{ product.name }}" class="product-img" width="50">
+                                {% endif %}
+                                <div>
+                                    <strong>{{ product.name }}</strong> - ${{ product.price }}
+                                    <p>{{ product.description }}</p>
+                                    <p>Stock: {{ product.stock }}</p>
+                                    <p>Category: {{ product.category_id }}</p>
+
+                                    <a href="#" onclick="editProduct(
+                                        '{{ product.id }}',
+                                        '{{ product.name }}',
+                                        '{{ product.description }}',
+                                        '{{ product.price }}',
+                                        '{{ product.stock }}',
+                                        '{{ product.category_id }}',
+                                        '{{ product.image_url }}'
+                                    )">Modify</a>
+
+                                    <form action="{{ url_for('admin') }}" method="post" style="display:inline;">
+                                        <input type="hidden" name="action" value="remove">
+                                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                                        <button type="submit">Remove</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+
+        <!-- Add Product Form -->
+        <div class="form-box" id="add-form">
+            <form action="{{ url_for('admin') }}" method="post">
+                <h2>Add New Product</h2>
+                <input type="hidden" name="action" value="add">
+                <input type="text" name="name" placeholder="Product Name" required>
+                <textarea name="description" placeholder="Product Description" required></textarea>
+                <input type="number" name="price" placeholder="Price" step="0.01" required>
+                <input type="number" name="stock" placeholder="Stock Quantity" required>
+                <select name="category_id" required>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" name="image_url" placeholder="Image URL (optional)">
+                <button type="submit">Add Product</button>
+                <p><a href="#" onclick="showForm('search-form')">Search & Modify Product</a></p>
+            </form>
+        </div>
+
+
+        <!-- Remove Product -->
+        <div class="form-box" id="remove-form">
+            <form action="{{ url_for('admin') }}" method="post">
+                <h2>Remove Product</h2>
+                <input type="hidden" name="action" value="remove">
+                <input type="text" name="product_id" placeholder="Product ID" required>
+                <button type="submit">Remove</button>
+                <p><a href="#" onclick="showForm('search-form')">Search & Modify Product</a></p>
+            </form>
+        </div>
+
+        <!-- Modify Product (Hidden by Default) -->
+        <div class="form-box" id="modify-form" style="display: none;">
+            <form action="{{ url_for('admin') }}" method="post">
+                <h2>Modify Product</h2>
+                <input type="hidden" name="action" value="modify">
+                <input type="hidden" name="product_id" id="modify-product-id">
+                <input type="text" name="name" id="modify-name" required>
+                <input type="text" name="price" id="modify-price" required>
+                <input type="text" name="category" id="modify-category" required>
+                <button type="submit">Update</button>
+                <p><a href="#" onclick="showForm('search-form')">Search & Modify Product</a></p>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

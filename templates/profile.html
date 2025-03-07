@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <script defer src="{{ url_for('static', filename='js/profile.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+</head>
+<body>
+    {% extends "base.html" %}
+
+{% block title %}Profile - E-Commerce{% endblock %}
+
+{% block content %}
+
+<!-- Profile Panel -->
+<div class="profile-panel" id="profilePanel">
+    <div class="profile-info">
+        <img src="{{ url_for('static', filename='images/profilep.jpg') }}" alt="Profile" class="profile-pic">
+        <p>{{ username }}</p>
+        <p>{{ email }}</p>
+    </div>
+    <ul class="profile-options">
+        <li>📍 Saved Address</li>
+        <li>📄 Other Details</li>
+        <li>📦 Order History</li>
+        <li>✏️ Edit Profile</li>
+        <li>❓ Help Center</li>
+        <li>💳 Payment Details</li>
+        <li><a href="{{ url_for('logout') }}" class="logout-btn">🚪 Logout</a></li>
+    </ul>   
+</div>    
+{% endblock %}
+
+</body>
+</html>

@@ -8,7 +8,16 @@
     color: rgba(250, 251, 251, 0.967);
     text-decoration: none;
     margin-left: 15px;
+    display: inline;
+    background: #141313;
+    color: rgb(240, 233, 233);
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
 }
+
 .navbar-nav .nav-link.active {
     color: #ffcc00 !important;  /* Change text color to yellow */
     font-weight: bold;          /* Make it bold */
@@ -22,11 +31,7 @@
     width: 250px;
     height: 100vh;
     background: rgb(0, 0, 0, 0.9);
-<<<<<<< HEAD
-    color:white;
-=======
     color:white;/**/
->>>>>>> 3f9f5dee3542b0bcd0a0f2572c85093c9ce77d0a
     box-shadow: 2px 0 10px rgb(0, 0, 0, 0.5);
     z-index: 1100;
     overflow-y: auto;

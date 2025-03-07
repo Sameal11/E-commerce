@@ -57,10 +57,10 @@
                  <img src="{{ url_for('static', filename='images/profilep.jpg') }}" alt="Profile Picture" class="profile-img">
                 </li>
                <li class="nav-item">
-                 <span class="nav-link text-white">Hello,{{ username }}!</span>
+                 <a class="nav-link text-white" href="{{ url_for('profile') }}">Hello,{{ username }}!</a>
                </li>
-                <li class="nav-item">
-                 <a class="nav-link text-white" href="{{ url_for('logout') }}">Logout</a>
+                <li class="log">
+                 <a class="nav-link text-white" href="{{ url_for('logout') }}"class="btn btn-danger">Logout</a>
                </li>
               </ul>
             {% else %}

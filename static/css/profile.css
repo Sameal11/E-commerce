@@ -1,0 +1,77 @@
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #222;
+    color: white;
+    padding: 10px 20px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Profile Panel */
+.profile-panel {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 250px;
+    background: #333;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    display: none; /* Initially hidden */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.profile-info {
+    text-align: center;
+}
+
+.profile-options {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.profile-options li {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+    cursor: pointer;
+}
+
+.profile-options li:hover {
+    background: #555;
+}
+
+.logout-btn {
+    display: block;
+    text-align: center;
+    color: red;
+    text-decoration: none;
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    background: #222;
+}
+
+.logout-btn:hover {
+    background: red;
+    color: white;
+}

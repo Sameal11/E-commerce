@@ -1,0 +1,159 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Styling */
+.navbar {
+    padding: 10px 20px;
+}
+
+.navbar-brand {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    margin-right: 15px;
+}
+
+.navbar .profile-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Admin Panel Container */
+.container {
+    width: 80%;
+    max-width: 900px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Box */
+.form-box {
+    display: none;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.form-box.active {
+    display: block;
+}
+/* Form Inputs */
+input[type="text"], 
+textarea, 
+select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* Form Elements */
+form h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+form input[type="text"], 
+form button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form button {
+    background: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+form button:hover {
+    background: #0056b3;
+}
+
+/* Links */
+form p a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+form p a:hover {
+    text-decoration: underline;
+}
+
+/* Product List */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 10px;
+    background: #0a0a0a;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ul li a {
+    color: #28a745;
+    font-size: 14px;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Remove Button in List */
+ul li form {
+    display: inline;
+}
+
+ul li form button {
+    background: #dc3545;
+    color: rgb(240, 233, 233);
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+ul li form button:hover {
+    background: #a71d2a;
+}
