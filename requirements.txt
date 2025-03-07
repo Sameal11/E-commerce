@@ -1,0 +1,13 @@
+Flask
+Flask-MySQLdb
+mysql-connector-python
+Werkzeug
+Jinja2
+Flask-WTF
+Flask-Login
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-Bcrypt
+Pillow
+gunicorn
+requests
