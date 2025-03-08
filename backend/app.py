@@ -8,6 +8,7 @@ from backend.db_connect import get_db_connection
 from flask_bcrypt import Bcrypt
 from flask_session import Session
 
+
 app = Flask(__name__, template_folder="../templates", static_folder="../static")
 
 app.secret_key = "your_secret_key"  # Change this to a secure key
@@ -200,18 +201,22 @@ def profile():
     conn.close()
 
     return render_template("profile.html", username=user["name"], email=user["email"], mobile=user["mobile_number"], wishlist=wishlist, cart=cart)
-products = {
-    "1": {"name": "Elegant Dress", "price": 79.99, "image": "images/dress.jpg"},
-    "2": {"name": "Casual Shirt", "price": 39.99, "image": "images/shirt.jpg"},
-    "3": {"name": "Stylish Sneakers", "price": 89.99, "image": "images/sneakers.jpg"},
-}
 
 # 🛒 Cart Routes
 @app.route("/cart")
 def cart():
     cart_items = session.get("cart", [])
-    subtotal = sum(float(item["price"]) * item["quantity"] for item in cart_items)
+    
+    # Ensure all prices are floats and quantities are integers
+    for item in cart_items:
+        item["price"] = float(item["price"])
+        item["quantity"] = int(item["quantity"])
+
+    subtotal = sum(item["price"] * item["quantity"] for item in cart_items)
+    subtotal = round(subtotal, 2)  # Ensure proper formatting
+
     return render_template("cart.html", cart_items=cart_items, subtotal=subtotal)
+
 
 @app.route("/add_to_cart", methods=["POST"])
 def add_to_cart():
