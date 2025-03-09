@@ -8,7 +8,6 @@ from backend.db_connect import get_db_connection
 from flask_bcrypt import Bcrypt
 from flask_session import Session
 
-
 app = Flask(__name__, template_folder="../templates", static_folder="../static")
 
 app.secret_key = "your_secret_key"  # Change this to a secure key
@@ -206,17 +205,8 @@ def profile():
 @app.route("/cart")
 def cart():
     cart_items = session.get("cart", [])
-    
-    # Ensure all prices are floats and quantities are integers
-    for item in cart_items:
-        item["price"] = float(item["price"])
-        item["quantity"] = int(item["quantity"])
-
-    subtotal = sum(item["price"] * item["quantity"] for item in cart_items)
-    subtotal = round(subtotal, 2)  # Ensure proper formatting
-
+    subtotal = sum(float(item["price"]) * item["quantity"] for item in cart_items)
     return render_template("cart.html", cart_items=cart_items, subtotal=subtotal)
-
 
 @app.route("/add_to_cart", methods=["POST"])
 def add_to_cart():
@@ -362,6 +352,164 @@ def fashion():
     conn.close()
     return render_template("fashion.html", products=products)
 
+# Home & Kitchen Route
+@app.route('/home-kitchen')
+def home_kitchen():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Get Home & Kitchen Category ID
+    cursor.execute("SELECT id FROM categories WHERE name = 'Home & Kitchen'")
+    category = cursor.fetchone()
+
+    products = []
+    if category:
+        category_id = category["id"]
+        # Fetch products in Home & Kitchen category
+        cursor.execute("SELECT * FROM products WHERE category_id = %s", (category_id,))
+        products = cursor.fetchall()
+
+    conn.close()
+    return render_template("home_kitchen.html", products=products)
+
+# Sports & Fitness Route
+@app.route('/sports-fitness')
+def sports_fitness():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Get Sports & Fitness Category ID
+    cursor.execute("SELECT id FROM categories WHERE name = 'Sports & Fitness'")
+    category = cursor.fetchone()
+
+    products = []
+    if category:
+        category_id = category["id"]
+        # Fetch products in Sports & Fitness category
+        cursor.execute("SELECT * FROM products WHERE category_id = %s", (category_id,))
+        products = cursor.fetchall()
+
+    conn.close()
+    return render_template("sports_fitness.html", products=products)
+# Books Route
+@app.route('/books')
+def books():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Get Books Category ID
+    cursor.execute("SELECT id FROM categories WHERE name = 'Books'")
+    category = cursor.fetchone()
+
+    products = []
+    if category:
+        category_id = category["id"]
+        # Fetch products in Books category
+        cursor.execute("SELECT * FROM products WHERE category_id = %s", (category_id,))
+        products = cursor.fetchall()
+
+    conn.close()
+    return render_template("books.html", products=products)
+
+# Toys & Games Route
+@app.route('/toys-games')
+def toys_games():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Get Toys & Games Category ID
+    cursor.execute("SELECT id FROM categories WHERE name = 'Toys & Games'")
+    category = cursor.fetchone()
+
+    products = []
+    if category:
+        category_id = category["id"]
+        # Fetch products in Toys & Games category
+        cursor.execute("SELECT * FROM products WHERE category_id = %s", (category_id,))
+        products = cursor.fetchall()
+
+    conn.close()
+    return render_template("toys_games.html", products=products)
+
+# Beauty & Health Route
+@app.route('/beauty-health')
+def beauty_health():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Get Beauty & Health Category ID
+    cursor.execute("SELECT id FROM categories WHERE name = 'Beauty & Health'")
+    category = cursor.fetchone()
+
+    products = []
+    if category:
+        category_id = category["id"]
+        # Fetch products in Beauty & Health category
+        cursor.execute("SELECT * FROM products WHERE category_id = %s", (category_id,))
+        products = cursor.fetchall()
+
+    conn.close()
+    return render_template("beauty_health.html", products=products)
+
+# Automobiles Route
+@app.route('/automobiles')
+def automobiles():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Get Automobiles Category ID
+    cursor.execute("SELECT id FROM categories WHERE name = 'Automobiles'")
+    category = cursor.fetchone()
+
+    products = []
+    if category:
+        category_id = category["id"]
+        # Fetch products in Automobiles category
+        cursor.execute("SELECT * FROM products WHERE category_id = %s", (category_id,))
+        products = cursor.fetchall()
+
+    conn.close()
+    return render_template("automobiles.html", products=products)
+
+# Groceries Route
+@app.route('/groceries')
+def groceries():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Get Groceries Category ID
+    cursor.execute("SELECT id FROM categories WHERE name = 'Groceries'")
+    category = cursor.fetchone()
+
+    products = []
+    if category:
+        category_id = category["id"]
+        # Fetch products in Groceries category
+        cursor.execute("SELECT * FROM products WHERE category_id = %s", (category_id,))
+        products = cursor.fetchall()
+
+    conn.close()
+    return render_template("groceries.html", products=products)
+
+# Furniture Route
+@app.route('/furniture')
+def furniture():
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Get Furniture Category ID
+    cursor.execute("SELECT id FROM categories WHERE name = 'Furniture'")
+    category = cursor.fetchone()
+
+    products = []
+    if category:
+        category_id = category["id"]
+        # Fetch products in Furniture category
+        cursor.execute("SELECT * FROM products WHERE category_id = %s", (category_id,))
+        products = cursor.fetchall()
+
+    conn.close()
+    return render_template("furniture.html", products=products)
 
 
 # 📩 Contact Page
@@ -377,10 +525,6 @@ def contact():
         return redirect(url_for('contact'))
 
     return render_template('contact.html')
-
-
-
-
 
 # 🚪 Logout Route (Fix)
 @app.route('/logout')

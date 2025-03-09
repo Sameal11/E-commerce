@@ -73,24 +73,24 @@
       </div>
     </nav>
 
-    <!-- Category Slider -->
+      <!-- Category Slider -->
     <div class="category-slider" id="categorySlider">
-        <ul>
-        <h2>Category</h2>
-        <hr class="line"></li><li><a href="{{ url_for('electronics') }}">
-          Electronics 💡 </a></li>
-        </li><li><a href="{{ url_for('fashion') }}">
-          Fashion 👠 </a></li>
-        <li><a href="#">Home & Kitchen</a></li>
-        <li><a href="#">Sports & Fitness</a></li>
-        <li><a href="#">Books</a></li>
-        <li><a href="#">Toys & Games</a></li>
-        <li><a href="#">Beauty & Health</a></li>
-        <li><a href="#">Automobiles</a></li>
-        <li><a href="#">Groceries</a></li>
-        <li><a href="#">Furniture</a></li>
-      </ul>
-   </div>
+      <h2>Category</h2>
+      <hr class="line">
+      <ul>
+          <li><a href="{{ url_for('electronics') }}">Electronics 💡</a></li>
+          <li><a href="{{ url_for('fashion') }}">Fashion 👠</a></li>
+          <li><a href="{{ url_for('home_kitchen') }}">Home & Kitchen</a></li>
+          <li><a href="{{ url_for('sports_fitness') }}">Sports & Fitness 🏋️‍♂️</a></li>
+          <li><a href="{{ url_for('books') }}">Books 📚</a></li>
+          <li><a href="{{ url_for('toys_games') }}">Toys & Games 🎲</a></li>
+          <li><a href="{{ url_for('beauty_health') }}">Beauty & Health 💄</a></li>
+          <li><a href="{{ url_for('automobiles') }}">Automobiles 🚗</a></li>
+          <li><a href="{{ url_for('groceries') }}">Groceries 🛒</a></li>
+          <li><a href="{{ url_for('furniture') }}">Furniture 🛋️</a></li>
+        </ul>
+    </div>
+
 
   </header>
 

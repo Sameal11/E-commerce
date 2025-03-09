@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1, p {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.product-card {
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
