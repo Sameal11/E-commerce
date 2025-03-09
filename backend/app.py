@@ -188,14 +188,6 @@ def profile():
         conn.close()
         return"user not found",404
 
-    # Fetch wishlist
-    cur.execute("SELECT name FROM wishlist WHERE user_id = %s", (session["user_id"],))
-    wishlist = [row["name"] for row in cur.fetchall()]
-
-    # Fetch cart items
-    cur.execute("SELECT name FROM cart WHERE user_id = %s", (session["user_id"],))
-    cart = [row["name"] for row in cur.fetchall()]
-
     cur.close()
     conn.close()
 

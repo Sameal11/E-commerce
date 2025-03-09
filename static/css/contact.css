@@ -1,11 +1,17 @@
 /* Contact Page Background */
-#contact-content {
-  background-image: url('/static/images/contact.jpg'); /* Replace with your image URL */
+.container{
+  /*background-image: url('/static/images/contact.jpg'); Replace with your image URL */
+  background-color: #222;
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
   padding: auto;
   color: rgb(5, 5, 5);
+  font-family: Arial, sans-serif;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 /* Adjust spacing */
