@@ -412,7 +412,7 @@ def books():
     return render_template("books.html", products=products)
 
 # Toys & Games Route
-@app.route('/toys-games')
+@app.route('/toys_games')
 def toys_games():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
@@ -432,7 +432,7 @@ def toys_games():
     return render_template("toys_games.html", products=products)
 
 # Beauty & Health Route
-@app.route('/beauty-health')
+@app.route('/beauty_health')
 def beauty_health():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
@@ -525,6 +525,23 @@ def contact():
         return redirect(url_for('contact'))
 
     return render_template('contact.html')
+# place order 
+@app.route('/place_order')
+def place_order():
+    cart_items = session.get('cart', [])  # Retrieve cart from session
+
+    # Convert price to float after stripping '$', and quantity to int
+    subtotal = sum(
+    (float(item['price'].replace('$', '')) if isinstance(item['price'], str) else item['price']) * int(item['quantity']) 
+    for item in cart_items
+)
+    total = subtotal + 5.00  # Add shipping cost
+    return render_template("place_order.html", cart_items=cart_items, subtotal=subtotal, total=total)
+# payment
+@app.route('/payment')
+def payment():
+    total = request.args.get('total', default=0, type=float)
+    return render_template('payment.html', total=total)
 
 # 🚪 Logout Route (Fix)
 @app.route('/logout')
