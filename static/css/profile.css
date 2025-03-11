@@ -1,77 +1,70 @@
-/* Navbar */
-.navbar {
+.pc{
+    font-family: Arial, sans-serif;
+    background-color: #222;  /* Dark outer background */
+    color: black; /* Text color adjusted for lighter background */
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    background: #222;
-    color: white;
-    padding: 10px 20px;
+    height: 100vh;
+    margin: 0;
+}
+.profile-container {
+    display: flex;
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    width: 800px;
+    max-width: auto;
+    height: auto;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.profile {
+/* Left Sidebar */
+.profile-sidebar {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    cursor: pointer;
+    gap: 15px;
+    width: 40%;
+    padding: 20px;
 }
 
 .profile-pic {
-    width: 40px;
-    height: 40px;
+    width: 80px;
+    height: 80px;
+    background-color: #4fd1c5;
     border-radius: 50%;
-    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
 }
 
-/* Profile Panel */
-.profile-panel {
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    width: 250px;
-    background: #333;
-    color: white;
-    padding: 15px;
-    border-radius: 8px;
-    display: none; /* Initially hidden */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.profile-info {
+.profile-info-box {
+    background-color: #4fd1c5;
+    padding: 10px 15px;
+    border-radius: 5px;
+    width: 100%;
     text-align: center;
+    font-weight: bold;
 }
 
+/* Right Panel */
 .profile-options {
-    list-style: none;
+    flex: 1;
+    padding: 20px;
+}
+
+.profile-options ul {
+    list-style-type: none;
     padding: 0;
-    margin-top: 10px;
 }
 
 .profile-options li {
-    padding: 10px;
-    border-bottom: 1px solid #444;
+    background-color: #3498db;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    font-size: 16px;
     cursor: pointer;
-}
-
-.profile-options li:hover {
-    background: #555;
-}
-
-.logout-btn {
-    display: block;
-    text-align: center;
-    color: red;
-    text-decoration: none;
-    margin-top: 10px;
-    padding: 8px;
-    border-radius: 5px;
-    background: #222;
-}
-
-.logout-btn:hover {
-    background: red;
-    color: white;
 }
