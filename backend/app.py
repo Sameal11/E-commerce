@@ -251,41 +251,112 @@ def checkout():
 # ❤️ Wishlist Routes
 @app.route('/wishlist')
 def wishlist():
-    wishlist_items = session.get("wishlist", [])
+    if 'user_id' not in session:
+        return redirect(url_for('auth'))
+
+    user_id = session['user_id']
+
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+
+    # Fetch wishlist items with product details
+    cur.execute("""
+        SELECT w.product_id, p.name, p.price
+        FROM wishlist w
+        JOIN products p ON w.product_id = p.id
+        WHERE w.user_id = %s
+    """, (user_id,))
+    wishlist_items = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
     return render_template('wishlist.html', wishlist=wishlist_items)
+
 
 @app.route('/add_to_wishlist', methods=['POST'])
 def add_to_wishlist():
-    product = {
-        "name": request.form.get("name"),
-        "price": request.form.get("price"),
-        "image": request.form.get("image")
-    }
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
 
-    wishlist = session.get("wishlist", [])
-    wishlist.append(product)
-    session["wishlist"] = wishlist
+    user_id = session['user_id']
+    product_id = request.form.get("product_id")
+
+    # print("Form Data:", request.form)
+    # print("Product ID:", product_id)
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+
+         # Fetch product details based on product_id
+        cur.execute("SELECT * FROM products WHERE id = %s", (product_id,))
+        product = cur.fetchone()
+
+        # Check if product already in wishlist
+        cur.execute("SELECT id FROM wishlist WHERE user_id = %s AND product_id = %s", (user_id, product_id))
+        existing = cur.fetchone()
+
+        if not existing:
+            cur.execute("INSERT INTO wishlist (user_id, product_id) VALUES (%s, %s)", (user_id, product_id))
+            conn.commit()
+            flash("Product added to wishlist successfully!", "success")
+        else:
+            flash("productis already in  wishlist")
+            
+    except Exception as e:
+        return f"An error occurred: {str(e)}", 500
+    finally:
+        cur.close()
+        conn.close()
+
     return redirect(url_for('wishlist'))
 
 @app.route('/remove_from_wishlist/<int:product_id>')
 def remove_from_wishlist(product_id):
-    wishlist = session.get("wishlist", [])
-    if 0 <= product_id < len(wishlist):
-        wishlist.pop(product_id)
-    session["wishlist"] = wishlist
+    if 'user_id' not in session:
+        return redirect(url_for('auth'))
+
+    user_id = session['user_id']
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    cur.execute("DELETE FROM wishlist WHERE user_id = %s AND product_id = %s", (user_id, product_id))
+    conn.commit()
+
+    cur.close()
+    conn.close()
+
     return redirect(url_for('wishlist'))
 
 @app.route('/move_to_cart/<int:product_id>')
 def move_to_cart(product_id):
-    if "wishlist" in session:
-        wishlist = session["wishlist"]
-        if 0 <= product_id < len(wishlist):
-            item = wishlist.pop(product_id)
-            if "cart" not in session:
-                session["cart"] = []
-            session["cart"].append({"name": item["name"], "price": item["price"], "image": item["image"], "quantity": 1})
-            session.modified = True
-    return redirect(url_for("wishlist"))
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+
+    # Check if product exists in wishlist
+    cur.execute("SELECT product_id FROM wishlist WHERE user_id = %s AND product_id = %s", (user_id, product_id))
+    item = cur.fetchone()
+
+    if item:
+        # Insert into cart (assuming you have a cart table)
+        cur.execute("INSERT INTO cart (user_id, product_id, quantity) VALUES (%s, %s, %s)", (user_id, product_id, 1))
+
+        # Remove from wishlist
+        cur.execute("DELETE FROM wishlist WHERE user_id = %s AND product_id = %s", (user_id, product_id))
+
+        conn.commit()
+
+    cur.close()
+    conn.close()
+
+    return redirect(url_for('wishlist'))
 #product page
 @app.route('/product/<int:product_id>')
 def product_page(product_id):
@@ -301,7 +372,7 @@ def product_page(product_id):
     if not product:
         return "Product not found", 404  # Show error if product doesn't exist
     
-    return render_template("product.html", product=product)
+    return render_template("product.html", product=product , product_id=product_id)
 
 
 # 🔥 categories Pages
