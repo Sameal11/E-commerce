@@ -43,6 +43,7 @@
 
                         <!-- Add to Wishlist -->
                         <form action="{{ url_for('add_to_wishlist') }}" method="POST" style="display:inline;">
+                            <input type="hidden" name="product_id" value="{{ product_id}}">
                             <input type="hidden" name="name" value="{{ product.name }}">
                             <input type="hidden" name="price" value="{{ product.price }}">
                             <input type="hidden" name="image" value="{{ product.image }}">
@@ -51,6 +52,7 @@
 
                         <!-- Add to Cart -->
                         <form action="{{ url_for('add_to_cart') }}" method="POST">
+                            <input type="hidden" name="product_id" value="{{ product_id}}">                            
                             <input type="hidden" name="name" value="{{ product.name }}">
                             <input type="hidden" name="price" value="{{ product.price }}">
                             <input type="hidden" name="image" value="{{ product.image }}">
