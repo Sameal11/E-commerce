@@ -196,9 +196,31 @@ def profile():
 # 🛒 Cart Routes
 @app.route("/cart")
 def cart():
-    cart_items = session.get("cart", [])
-    subtotal = sum(float(item["price"]) * item["quantity"] for item in cart_items)
+    if 'user_id' not in session:
+        return redirect(url_for('auth'))
+
+    user_id = session['user_id']
+
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+
+    # Fetch cart items along with quantity and product details
+    cur.execute("""
+        SELECT c.product_id, c.quantity, p.name, p.price
+        FROM cart c
+        JOIN products p ON c.product_id = p.id
+        WHERE c.user_id = %s
+    """, (user_id,))
+    cart_items = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    # Calculate subtotal
+    subtotal = sum(item["price"] * item["quantity"] for item in cart_items)
+
     return render_template("cart.html", cart_items=cart_items, subtotal=subtotal)
+
 
 @app.route("/add_to_cart", methods=["POST"])
 def add_to_cart():
@@ -241,11 +263,31 @@ def remove_from_cart(item_name):
         session.modified = True
 
     return redirect(url_for("cart"))
-
+#checkout 
 @app.route("/checkout")
 def checkout():
-    cart_items = session.get("cart", [])
+    if 'user_id' not in session:
+        return redirect(url_for('auth'))
+
+    user_id = session['user_id']
+
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+
+    # Fetch cart items from DB
+    cur.execute("""
+        SELECT c.product_id, c.quantity, p.name, p.price
+        FROM cart c
+        JOIN products p ON c.product_id = p.id
+        WHERE c.user_id = %s
+    """, (user_id,))
+    cart_items = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
     subtotal = sum(item["price"] * item["quantity"] for item in cart_items)
+
     return render_template("checkout.html", cart_items=cart_items, subtotal=subtotal)
 
 # ❤️ Wishlist Routes
@@ -271,7 +313,7 @@ def wishlist():
     cur.close()
     conn.close()
 
-    return render_template('wishlist.html', wishlist=wishlist_items)
+    return render_template('wishlist.html',wishlist=wishlist_items)
 
 
 @app.route('/add_to_wishlist', methods=['POST'])
@@ -312,12 +354,13 @@ def add_to_wishlist():
 
     return redirect(url_for('wishlist'))
 
-@app.route('/remove_from_wishlist/<int:product_id>')
+@app.route('/remove_from_wishlist/<int:product_id>', methods=['POST'])
 def remove_from_wishlist(product_id):
     if 'user_id' not in session:
         return redirect(url_for('auth'))
 
     user_id = session['user_id']
+    product_id = request.form.get('product_id')
 
     conn = get_db_connection()
     cur = conn.cursor()
@@ -329,6 +372,7 @@ def remove_from_wishlist(product_id):
     conn.close()
 
     return redirect(url_for('wishlist'))
+
 
 @app.route('/move_to_cart/<int:product_id>')
 def move_to_cart(product_id):
@@ -601,10 +645,21 @@ def place_order():
     total = subtotal + 5.00  # Add shipping cost
     return render_template("place_order.html", cart_items=cart_items, subtotal=subtotal, total=total)
 # payment
-@app.route('/payment')
+@app.route("/payment", methods=["POST"])
 def payment():
-    total = request.args.get('total', default=0, type=float)
-    return render_template('payment.html', total=total)
+    if 'user_id' not in session:
+        return redirect(url_for('auth'))
+
+    name = request.form['name']
+    address = request.form['address']
+    city = request.form['city']
+    state = request.form['state']
+    zip_code = request.form['zip']
+    email = request.form['email']
+    total = float(request.form['total'])
+
+    # Save order or process payment here...
+    return render_template("payment.html", name=name, total=total)
 
 # 🚪 Logout Route (Fix)
 @app.route('/logout')

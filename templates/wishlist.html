@@ -12,47 +12,53 @@
 </head>
 <body>
     {% extends "base.html" %}
-    {% block title %}Home - E-Commerce{% endblock %}
-    {% block content %}
-        <!-- Wishlist Section -->
-     <div class="container mt-5">
+
+{% block title %}Wishlist - E-Commerce{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
         <h1 class="text-center">Your Wishlist ❤️</h1>
         <p class="text-center">Save items you love for later!</p>
-  
+    
         <div class="row">
-            <div class="col-lg-8">
-                <table class="table table-bordered">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Move to Cart</th>
-                            <th>Remove</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in wishlist %}
-                        <tr>
-                            <td>
-                                <!-- <img src="{{ url_for('static', filename=item.image) }}" width="50"> -->
-                                {{ item.name }}
-                            </td>
-                            <td>${{ item.price }}</td>
-                            <td>
-                                <a href="{{ url_for('move_to_cart', product_id=loop.index0) }}" class="btn btn-success btn-sm">Move to Cart 🛒</a>
-                            </td>
-                            <td>
-                                <a href="{{ url_for('remove_from_wishlist', product_id=item.id) }}" class="btn btn-danger btn-sm">Remove ❌</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                    
-                </table>
-            </div>
+          <div class="col-lg-8 mx-auto">
+            <table class="table table-bordered">
+              <thead class="table-dark">
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Move to Cart</th>
+                  <th>Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in wishlist %}
+                <tr>
+                  <td>{{ item.name }}</td>
+                  <td>${{ item.price }}</td>
+                  <td>
+                    <a href="{{ url_for('move_to_cart', product_id=item.product_id) }}" class="btn btn-success btn-sm">
+                      Move to Cart 🛒
+                    </a>
+                  </td>
+                  <td>
+                    <form action="{{ url_for('remove_from_wishlist', product_id=item.product_id) }}" method="POST" style="display:inline;">
+                      <input type="hidden" name="product_id" value="{{ item.product_id }}">
+                      <button type="submit" class="btn btn-secondary">Remove</button>
+                    </form>
+                  </td>
+                </tr>
+                {% else %}
+                <tr>
+                  <td colspan="4" class="text-center">Your wishlist is empty!</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      
-    {% endblock %}
+      {% endblock %}
+    
 </body>
 </html>
