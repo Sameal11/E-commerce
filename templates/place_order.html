@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-lg-8">
                 <h3>Shipping Information</h3>
-                <form id="order-form" action="{{ url_for('payment') }}" method="POST">
+                <form id="order-form" action="{{ url_for('place_order') }}" method="POST">
                     <div class="mb-3">
                         <label for="name" class="form-label">Full Name</label>
                         <input type="text" class="form-control" id="name" name="name" required>

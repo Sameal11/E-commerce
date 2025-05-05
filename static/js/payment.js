@@ -46,3 +46,18 @@ document.addEventListener("DOMContentLoaded", function () {
         payBtn.disabled = true;
     });
 });
+
+    document.querySelectorAll('input[name="payment-method"]').forEach((radio) => {
+        radio.addEventListener('change', function () {
+            if (this.value === 'card') {
+                cardDetails.style.display = 'block';
+                upiDetails.style.display = 'none';
+            } else if (upiOptions.includes(this.id)) {
+                upiDetails.style.display = 'block';
+                cardDetails.style.display = 'none';
+            } else {
+                cardDetails.style.display = 'none';
+                upiDetails.style.display = 'none';
+            }
+        });
+    });

@@ -263,32 +263,6 @@ def remove_from_cart(item_name):
         session.modified = True
 
     return redirect(url_for("cart"))
-#checkout 
-@app.route("/checkout")
-def checkout():
-    if 'user_id' not in session:
-        return redirect(url_for('auth'))
-
-    user_id = session['user_id']
-
-    conn = get_db_connection()
-    cur = conn.cursor(dictionary=True)
-
-    # Fetch cart items from DB
-    cur.execute("""
-        SELECT c.product_id, c.quantity, p.name, p.price
-        FROM cart c
-        JOIN products p ON c.product_id = p.id
-        WHERE c.user_id = %s
-    """, (user_id,))
-    cart_items = cur.fetchall()
-
-    cur.close()
-    conn.close()
-
-    subtotal = sum(item["price"] * item["quantity"] for item in cart_items)
-
-    return render_template("checkout.html", cart_items=cart_items, subtotal=subtotal)
 
 # ❤️ Wishlist Routes
 @app.route('/wishlist')
@@ -632,34 +606,82 @@ def contact():
         return redirect(url_for('contact'))
 
     return render_template('contact.html')
-# place order 
-@app.route('/place_order')
-def place_order():
-    cart_items = session.get('cart', [])  # Retrieve cart from session
 
-    # Convert price to float after stripping '$', and quantity to int
-    subtotal = sum(
-    (float(item['price'].replace('$', '')) if isinstance(item['price'], str) else item['price']) * int(item['quantity']) 
-    for item in cart_items
-)
-    total = subtotal + 5.00  # Add shipping cost
-    return render_template("place_order.html", cart_items=cart_items, subtotal=subtotal, total=total)
-# payment
-@app.route("/payment", methods=["POST"])
+@app.route('/place_order', methods=['GET', 'POST'])
+def place_order():
+    if 'user_id' not in session:
+        return redirect(url_for('auth'))
+
+    user_id = session['user_id']
+    conn = get_db_connection()
+    cur = conn.cursor(dictionary=True)
+
+    if request.method == 'POST':
+        name = request.form['name']
+        address = request.form['address']
+        city = request.form['city']
+        state = request.form['state']
+        zip_code = request.form['zip']
+        email = request.form['email']
+        total = request.form['total']
+
+        cur.execute("""
+            INSERT INTO orders (user_id, name, address, city, state, zip, email, total)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (user_id, name, address, city, state, zip_code, email, total))
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
+        return redirect(url_for('payment'))
+
+    cur.execute("""
+        SELECT p.name, c.quantity, p.price
+        FROM cart c
+        JOIN products p ON c.product_id = p.id
+        WHERE c.user_id = %s
+    """, (user_id,))
+    cart_items = cur.fetchall()
+
+    subtotal = sum(float(item['price']) * float(item['quantity']) for item in cart_items)
+
+    shipping_cost = float('5.00')
+    total_cost = subtotal + shipping_cost
+
+    cur.close()
+    conn.close()
+
+    return render_template('place_order.html', cart_items=cart_items, subtotal=subtotal, total=total_cost)
+@app.route('/payment', methods=['GET', 'POST'])
 def payment():
     if 'user_id' not in session:
         return redirect(url_for('auth'))
 
-    name = request.form['name']
-    address = request.form['address']
-    city = request.form['city']
-    state = request.form['state']
-    zip_code = request.form['zip']
-    email = request.form['email']
-    total = float(request.form['total'])
+    if request.method == 'POST':
+        payment_method = request.form.get('payment-method')
+        card_number = request.form.get('card-number')
+        expiry = request.form.get('expiry')
+        cvv = request.form.get('cvv')
+        upi_id = request.form.get('upi-id')
+        total = request.form.get('total')
 
-    # Save order or process payment here...
-    return render_template("payment.html", name=name, total=total)
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        cur.execute("""
+            INSERT INTO payments (user_id, method, card_number, expiry, cvv, upi_id, total)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """, (session['user_id'], payment_method, card_number, expiry, cvv, upi_id, total))
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
+        return render_template('payment_success.html')
+
+    total = request.args.get('total', 0.0)
+    return render_template('payment.html', total=total)
 
 # 🚪 Logout Route (Fix)
 @app.route('/logout')
